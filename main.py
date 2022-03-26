@@ -9,7 +9,10 @@ def get_data():
     response = get_req.json()
     print(response)
     sell_price = response["btc_usd"]["sell"]
-    print(f"{datetime.now().strftime('%y-%m-%d %H:%M')}\nSell BTC price: {sell_price} USD!")
+    buy_price = response["btc_usd"]["buy"]
+    print(f"{datetime.now().strftime('%y-%m-%d %H:%M')}"
+          f"\nSell BTC price: {sell_price} USD!\nBuy BTC price: {buy_price} USD!")
+
 
 def telegram_bot(auth_token):
     bot = telebot.TeleBot(auth_token)
@@ -25,9 +28,11 @@ def telegram_bot(auth_token):
                 get_req = requests.get("https://yobit.net/api/3/ticker/btc_usd")
                 response = get_req.json()
                 sell_price = response["btc_usd"]["sell"]
+                buy_price = response["btc_usd"]["buy"]
                 bot.send_message(
                     message.chat.id,
-                    f"{datetime.now().strftime('%y-%m-%d %H:%M')}\nSell BTC price: {sell_price} USD!"
+                    f"{datetime.now().strftime('%y-%m-%d %H:%M')}"
+                    f"\nSell BTC price: {sell_price} USD!\nBuy BTC price: {buy_price} USD!"
                 )
             except Exception as ex:
                 print(ex)
